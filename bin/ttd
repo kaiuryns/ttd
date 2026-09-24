@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
-# !/usr/bin/env ruby
-
-require_relative '../lib/ttd'
+#!/usr/bin/env ruby
+require_relative '../lib/ttd.rb'
 
 Ttd::CLI.run(ARGV)

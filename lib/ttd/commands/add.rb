@@ -4,35 +4,31 @@ module Ttd
   module Commands
     # add
     class Add
+      DEFAULT = { state: 'todo', priority: 'low', due: nil }.freeze
+
       def self.run(argv, store)
-        options = { state: 'todo', priority: 'low', due: nil }
+        options = {}
+        parser = Ttd::Commands.option_parse(options)
+        names = parser.parse(argv)
 
-        parser = OptParse.new do |opts|
-          opts.on('--state STATE', Ttd::STATES, "state (#{Ttd::STATES.join('/')})") do |v|
-            options[:state] = v
-          end
-
-          opts.on('--priority PRIORITY', Ttd::PRIORITIES, "priority (#{Ttd::PRIORITIES.join('/')}") do |v|
-            options[:priority] = v
-          end
-          opts.on('--due DUE') do |v|
-            options[:due] = Ttd::DueParser.parse(v)
-          end
-        end
-
-        parser.parse(argv)
+        raise ArgumentError, 'add need at least one task' if names.empty?
 
         tasks = store.load
-
-        names.each do |name|
-          tasks[name.to_sym] = {
-            state: options[:state],
-            priority: options[:priority],
-            due: options[:due]
-          }
-        end
-
+        apply(tasks, names, options)
         store.save(tasks)
+      end
+
+      def self.apply(tasks, names, options)
+        names.each do |name|
+          key = name.to_sym
+          old_options = tasks[key] || {}
+
+          tasks[key] = merge_options(old_options, options)
+        end
+      end
+
+      def self.merge_options(old_options, options)
+        DEFAULT.merge(old_options).merge(options.compact)
       end
     end
   end

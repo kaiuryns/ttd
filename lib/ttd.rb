@@ -5,10 +5,10 @@ require 'json'
 require 'optparse'
 
 require_relative 'ttd/store'
-require_relative 'ttd/cli'
-require_relative 'ttd/due_parser'
 
 Dir[File.expand_path('ttd/commands/*.rb', __dir__)].sort.each { |f| require f }
+
+require_relative 'ttd/cli'
 
 # entry point
 module Ttd
