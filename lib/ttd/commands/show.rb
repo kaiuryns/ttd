@@ -8,7 +8,7 @@ module Ttd
         parser = Ttd::Commands.option_parse({})
         names = parser.parse(argv)
 
-        raise ArgumentError, 'dont aceept tasks' unless names.empty?
+        raise ArgumentError, 'dont accept tasks' unless names.empty?
 
         tasks = store.load
         puts JSON.pretty_generate(tasks)

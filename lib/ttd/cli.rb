@@ -2,12 +2,12 @@
 
 COMMANDS = {
   'add' => Ttd::Commands::Add,
-  'remove' => 'remove',
+  'remove' => Ttd::Commands::Remove,
   'next' => Ttd::Commands::Next,
   'before' => Ttd::Commands::Before,
   'up' => Ttd::Commands::Up,
   'down' => Ttd::Commands::Down,
-  'clear' => 'clear'
+  'clear' => Ttd::Commands::Clear
 }.freeze
 
 module Ttd

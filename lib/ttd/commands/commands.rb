@@ -42,5 +42,11 @@ module Ttd
         opts.on('--due DUE') { |v| options[:due] = Ttd::Commands.due_parse(v) }
       end
     end
+
+    def self.confirm_deletion?(matches)
+      puts JSON.pretty_generate(matches)
+      print 'delete these tasks? [y/N]: '
+      $stdin.gets.chomp == 'y'
+    end
   end
 end
